@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mapa de Santa Fe</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mapa de Santa Fe - Casco Histórico</h1>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Inicializar el mapa
+        var map = L.map('map').setView([-31.6239, -60.6943], 14);
+
+        // Agregar el mapa base de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Definir los límites del Casco Histórico de Santa Fe
+        var cascoHistoricoCoords = [
+            [-31.625015, -60.707339],
+            [-31.622194, -60.707339],
+            [-31.622194, -60.690967],
+            [-31.625015, -60.690967],
+            [-31.625015, -60.707339]
+        ];
+
+        // Crear un polígono para el Casco Histórico
+        var cascoHistorico = L.polygon(cascoHistoricoCoords, {
+            color: 'blue',
+            fillColor: '#0000FF',
+            fillOpacity: 0.5
+        }).addTo(map);
+
+        // Agregar un popup al polígono
+        cascoHistorico.bindPopup("Casco Histórico de Santa Fe");
+
+        // Marcadores de los sitios importantes
+        var sitios = [
+            ["Catedral Metropolitana de Santa Fe", -31.624879, -60.697674],
+            ["Convento de San Francisco", -31.625694, -60.705448],
+            ["Casa de Gobierno de Santa Fe", -31.625493, -60.700623],
+            ["Museo Etnográfico y Colonial Juan de Garay", -31.626551, -60.700217],
+            ["Museo Histórico Provincial", -31.625103, -60.704833],
+            ["Plaza 25 de Mayo", -31.624960, -60.698395],
+            ["Basílica de Nuestra Señora del Carmen", -31.623892, -60.705047],
+            ["Biblioteca Popular Mariano Moreno", -31.625040, -60.701739],
+            ["Catedral", -31.656667, -60.710556]
+        ];
+
+        sitios.forEach(function(sitio) {
+            L.marker([sitio[1], sitio[2]]).addTo(map)
+                .bindPopup(sitio[0]);
+        });
+    </script>
+</body>
+</html>
